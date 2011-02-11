@@ -1,0 +1,52 @@
+<html>
+<head>
+	<title>Anatomy Pro Contouring</title>
+	<script type="text/javascript" src="javascript/lib/prototype.js"></script>
+	<script type="text/javascript" src="javascript/lib/lowpro.js"></script>
+	<script type="text/javascript" src="javascript/lib/scriptaculous.js?load=effects"></script>
+	<script type="text/javascript" src="javascript/lib/socket.io.js"></script>
+	<script type="text/javascript" src="javascript/classes/images.js"></script>
+	<script type="text/javascript" src="javascript/init.js"></script>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		img {
+			position: absolute;
+			z-index: 1;
+			top: 20px;
+			left: 40px;
+		}
+		input {
+			
+		}
+		canvas {
+			position: absolute;
+			top: 20px;
+			left: 40px;
+			width: 300px;
+			height: 300px;
+			z-index: 2;
+		}
+	</style>
+</head>
+<body>
+	<div class="area">
+		<div class="images">
+			<img src="images/display1.png" />
+			<img src="images/display2.png" />
+			<img src="images/display3.png" />
+			<img src="images/display4.png" />
+			<img src="images/display5.png" />
+			<img src="images/display6.png" />
+			<img src="images/display7.png" />
+			<img src="images/display8.png" />
+			<img src="images/display9.png" />
+			<img src="images/display10.png" />
+		</div>
+		<canvas width="300" height="300"></canvas>
+		<input id="slider" type="range" min="0" max="9"/>
+	</div>
+</body>
+</html>
