@@ -16,6 +16,7 @@ var Images = Class.create({
 		this.slider = this.element.down('#slider');
 		this.slider.value = 0;
 		this.currentSlide = 0;
+		this.color;
 		this.startImages();
 	},
 	addObservers: function() {
@@ -44,8 +45,11 @@ var Images = Class.create({
 	startLine: function(event) {
 		this.isDrawing = true;
 		this.context.beginPath();
+		this.context.strokeStyle = "rgba("+this.color.r+","+this.color.g+","+this.color.b+",1)";
+		this.context.lineJoin = "round";
+		this.context.lineWidth = 6;
 		this.context.moveTo(event.clientX-this.canvas.offsetLeft, event.clientY-this.canvas.offsetTop);
-		this.socket.send(JSON.stringify({moveTo: {x: event.clientX-this.canvas.offsetLeft, y: event.clientY-this.canvas.offsetTop}}));
+		this.socket.send(JSON.stringify({moveTo: {slide: this.currentSlide, x: event.clientX-this.canvas.offsetLeft, y: event.clientY-this.canvas.offsetTop}}));
 	},
 	endLine: function(event) {
 		this.isDrawing = false;
@@ -53,21 +57,26 @@ var Images = Class.create({
 	drawLine: function(event) {
 		if(this.isDrawing) {
 			this.context.lineTo(event.clientX-this.canvas.offsetLeft, event.clientY-this.canvas.offsetTop);
-			this.socket.send(JSON.stringify({lineTo: {x: event.clientX-this.canvas.offsetLeft, y: event.clientY-this.canvas.offsetTop}}));
+			this.socket.send(JSON.stringify({lineTo: {slide: this.currentSlide, x: event.clientX-this.canvas.offsetLeft, y: event.clientY-this.canvas.offsetTop}}));
 			this.context.stroke();
 		}
 	},
 	onConnect: function(response) {
-		
+		//this.socket.send(JSON.stringify({setColor}));
 	},
 	onMessage: function(message) {
 		var msg = JSON.parse(message);
-		console.log(msg);
+		if(msg.color) {
+			this.color = msg.color;
+		}
 		if(msg.moveTo) {
 			this.context.beginPath();
 			this.context.moveTo(msg.moveTo.x, msg.moveTo.y);
 		}
 		if(msg.lineTo) {
+			this.context.lineJoin = "round";
+			this.context.strokeStyle = "rgba("+msg.lineTo.color.r+","+msg.lineTo.color.g+","+msg.lineTo.color.b+",1)";
+			this.context.lineWidth = 6;
 			this.context.lineTo(msg.lineTo.x, msg.lineTo.y);
 			this.context.stroke();
 		}
