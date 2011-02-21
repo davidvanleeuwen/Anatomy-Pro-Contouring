@@ -21,6 +21,7 @@ exports.bootSOCKET = function(app) {
 			//client.send(data);
 			if(msg.lineTo) {
 				client.broadcast(JSON.stringify({lineTo: {
+					slide: msg.lineTo.slide,
 					x: msg.lineTo.x,
 					y: msg.lineTo.y,
 					color: color

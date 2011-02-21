@@ -1,0 +1,9 @@
+= Anatomy Pro Contouring
+
+== Copyright
+
+Copyright (c) 2011 David van Leeuwen, Ben Shapiro.
+
+== License
+
+This project is is licensed under the terms of the GPL License, see the included GPL-LICENSE file.

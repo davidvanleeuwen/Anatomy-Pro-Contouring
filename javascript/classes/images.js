@@ -31,7 +31,7 @@ var Images = Class.create({
 	},
 	startImages: function() {
 		this.images[this.currentSlide].show();
-		this.socket = new io.Socket('localhost', {port: 3000});
+		this.socket = new io.Socket('localhost', {port: 3000/*, secure: true */});
 		this.socket.connect();
 		this.addObservers();
 	},
@@ -49,7 +49,7 @@ var Images = Class.create({
 		this.context.lineJoin = "round";
 		this.context.lineWidth = 6;
 		this.context.moveTo(event.clientX-this.canvas.offsetLeft, event.clientY-this.canvas.offsetTop);
-		this.socket.send(JSON.stringify({moveTo: {slide: this.currentSlide, x: event.clientX-this.canvas.offsetLeft, y: event.clientY-this.canvas.offsetTop}}));
+		this.socket.send(JSON.stringify({moveTo: {slide: this.slider.value, x: event.clientX-this.canvas.offsetLeft, y: event.clientY-this.canvas.offsetTop}}));
 	},
 	endLine: function(event) {
 		this.isDrawing = false;
@@ -57,7 +57,7 @@ var Images = Class.create({
 	drawLine: function(event) {
 		if(this.isDrawing) {
 			this.context.lineTo(event.clientX-this.canvas.offsetLeft, event.clientY-this.canvas.offsetTop);
-			this.socket.send(JSON.stringify({lineTo: {slide: this.currentSlide, x: event.clientX-this.canvas.offsetLeft, y: event.clientY-this.canvas.offsetTop}}));
+			this.socket.send(JSON.stringify({lineTo: {slide: this.slider.value, x: event.clientX-this.canvas.offsetLeft, y: event.clientY-this.canvas.offsetTop}}));
 			this.context.stroke();
 		}
 	},
